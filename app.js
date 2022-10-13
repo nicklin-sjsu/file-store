@@ -18,7 +18,13 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 //var snsTopic = process.env.NEW_SIGNUP_TOPIC;
 const lambda_url = process.env.LAMBDA_URL || 'https://uw25lpeced.execute-api.us-west-2.amazonaws.com/Prod/api/';
-
+console.log({
+    host: process.env.DATABASE_HOST || 'localhost',
+    user: process.env.DATABASE_USER || 'root',
+    password: process.env.DATABASE_PWD || 'root',
+    port: process.env.DATABASE_PORT || 3306,
+    database: process.env.DATABASE_DATABASE || 'file_website',
+});
 AWS.config.update({
     region: process.env.REGION,
     apiVersion: 'latest',
