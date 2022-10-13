@@ -20,7 +20,7 @@ const port = process.env.PORT || 3000;
 const lambda_url = process.env.LAMBDA_URL || 'https://uw25lpeced.execute-api.us-west-2.amazonaws.com/Prod/api/';
 
 AWS.config.update({
-    region: 'us-west-1',
+    region: process.env.region,
     apiVersion: 'latest',
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY,
