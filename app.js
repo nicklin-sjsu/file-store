@@ -42,8 +42,7 @@ function sns_message(message) {
     if (process.env.NODE_ENV == 'production') {
         var params = {
             Message: message,
-            TopicArn: process.env.TOPIC_ARN,
-            MessageGroupId: 'product-214'
+            TopicArn: process.env.TOPIC_ARN
         };
         var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
         publishTextPromise
