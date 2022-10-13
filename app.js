@@ -19,8 +19,6 @@ const port = process.env.PORT || 3000;
 //var snsTopic = process.env.NEW_SIGNUP_TOPIC;
 const lambda_url = process.env.LAMBDA_URL || 'https://uw25lpeced.execute-api.us-west-2.amazonaws.com/Prod/api/';
 
-console.log(process.env);
-
 AWS.config.update({
     region: process.env.REGION,
     apiVersion: 'latest',

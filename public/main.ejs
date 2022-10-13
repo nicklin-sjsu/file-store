@@ -231,8 +231,9 @@
 					'Content-Type': 'application/json'
 				},
 			})
-				.then((response) => response.json())
+				.then((result) => result.json())
                 .then((result) => {
+                	console.log(result.code);
                     if (result.code == 200) {
                         location.reload();
                     } else {
