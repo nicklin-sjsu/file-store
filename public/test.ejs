@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>A New Startup: Sign Up Today!</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="bootstrap/css/theme/<%= theme %>/bootstrap.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+
+	</head>
+
+	<body>
+
+	<div class="container">
+		<div class="header">
+		<ul class="nav nav-pills pull-right">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Press</a></li>
+		</ul>
+		<h3 class="text-muted">A New Startup</h3>
+		</div>
+		<% if (flask_debug === 'true') { %>
+		<div class="alert alert-danger">
+		Flask is in debug mode. This is not safe for production.
+		</div>
+		<% } %>
+		<div id="signupSuccess" class="alert alert-success" style="display:none">
+		<p id="signupSuccessText">Thanks for signing up! You'll be among the first to know when we launch.</p>
+		</div>
+		<div id="signupDuplicate" class="alert alert-success" style="display:none">
+		<p id="signupDuplicateText">Fear not, you're already on the list! You'll be among the first to know when we launch.</p>
+		</div>
+		<div id="signupError" class="alert alert-info" style="display:none">
+		<p id="signupErrorText">Well this is embarrassing. It looks like we're having trouble getting you on the list.</p>
+		</div>
+		<div class="jumbotron">
+		<h1>The next big thing is coming...</h1>
+		<p class="lead">We're pretty thrilled to unveil our latest creation. Sign up below to be notified when we officially launch!</p>
+		<div class="mb-3">
+			<label class="form-label">Upload File</label>
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Fisrt Name" id="first_name" aria-describedby="basic-addon1">
+				<input type="text" class="form-control" placeholder="Last Name" id="last_name" aria-describedby="basic-addon1">
+				<input class="form-control" type="file" id="formFile">
+				<p><a class="btn btn-lg btn-success"	data-toggle="modal" onclick="uploadFile();" multiple>Upload</a></p>
+			</div>
+		</div>
+		</div>
+
+
+		<div class="footer">
+		<p>&copy; A New Startup 2013</p>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Provide a few details and we'll be in touch...</h4>
+			</div>
+			<div class="modal-body">
+				<div id="intro"></div>
+				<form id="signupForm" role="form">
+				<input type="hidden" id="theme" name="theme" value="<%= theme %>"/>
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+				</div>
+				<div class="form-group">
+					<label for="email">Email address</label>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Your email address">
+				</div>
+				<div class="form-group">
+					<label for="previewAccess">Interested in Preview Access?</label>
+					<select class="form-control" name="previewAccess">
+					<option>Yes</option>
+					<option>No</option>
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="signup" type="button" class="btn btn-primary">Sign Up!</button>
+			</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+	</div><!-- /container -->
+
+	<script src="jquery/jquery-1.11.3.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.get( "/get_user", { user_id: 1 }, function (data) {
+				console.log(data);
+				if (data.code == 200) {
+					$("#intro").text("Hello, my name is " + data.data.first_name + " " + data.data.last_name);
+				}
+			})
+			.error(function(xhr) {
+				switch(xhr.status) {
+					case 409:
+					$("#signupDuplicate").show();
+					break;
+					default:
+					$("#signupError").show();
+				}
+			});
+		})
+
+		function uploadFile() {
+			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+				alert('The File APIs are not fully supported in this browser.');
+				return;
+			}
+			
+			var input = document.getElementById('formFile');
+			var first_name = document.getElementById('first_name').value;
+			var last_name = document.getElementById('last_name').value;
+			if (!input) {
+				alert("Um, couldn't find the fileinput element.");
+			}
+			else if (!input.files) {
+				alert("This browser doesn't seem to support the `files` property of file inputs.");
+			}
+			else if (!input.files[0]) {
+				alert("Please select a file");							 
+			} else if (!first_name || !last_name) {
+				
+			}
+			else {
+				for (let i = 0; i< input.files.length; i++) {
+					let file = input.files[i];
+					let reader = new FileReader();
+
+					reader.addEventListener('loadend', function(e) {
+						fetch(<%= uploadurl %> + file.name, {
+							method: "POST",
+							body : new Blob([reader.result], {type: file.type}),
+						}).then((response) => {
+							if (response.ok) {
+								alert("Upload Succeed");
+							} else {
+								alert("Upload Failed");
+							}
+
+						})
+					});
+					reader.readAsArrayBuffer(file);
+
+					fetch("/upload_file", {
+						method: "GET",
+						body: {	}
+					})
+				}
+			}
+		}
+	</script>
+	</body>
+</html>

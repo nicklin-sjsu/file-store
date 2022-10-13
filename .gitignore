@@ -1,0 +1,5 @@
+.env
+node_modules
+.vs
+.env.development
+.env.production

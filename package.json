@@ -1,18 +1,32 @@
 {
-    "name": "express-HelloWorld",
-    "description": "Hello World ExpressJS WebService",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "4.16.2"
-    },
-    "devDependencies": {
-        "mocha": "5.0.0",
-        "unit.js": "2.0.0",
-        "supertest": "3.0.0"
-    },
-    "scripts": {
-        "start": "node server.js",
-        "test": "mocha --recursive tests --exit"
-    }
+  "name": "Node-Website-EC2-Sample-App",
+  "description": "Sample NodeJs web application",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "db": "NODE_ENV=production node setup_db.js",
+    "dev": "NODE_ENV=development node app.js",
+    "start": "NODE_ENV=production node app.js"
+  },
+  "dependencies": {
+    "aws-sdk": "latest",
+    "bcrypt": "^5.1.0",
+    "body-parser": "latest",
+    "bootstrap": "latest",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "latest",
+    "express-flash": "^0.0.2",
+    "express-openid-connect": "latest",
+    "express-session": "^1.17.3",
+    "forever": "4.0.0",
+    "formidable": "latest",
+    "method-override": "^3.0.0",
+    "moment": "^2.29.4",
+    "multiparty": "^4.2.3",
+    "mysql": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "request": "latest"
+  }
 }
