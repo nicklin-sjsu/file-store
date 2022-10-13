@@ -155,7 +155,7 @@ app.post('/upload_file', checkAuthenticated, function (req, res) {
             } else {
                 var params = {
                     Body: file_content,
-                    Bucket: 'fileweb-aws-s3',
+                    Bucket: process.env.BUCKET_NAME,
                     Key: user_id + "/" + file_name
                 };
                 s3.putObject(params, function (err, data) {
@@ -201,7 +201,7 @@ app.post('/update_file', checkAuthenticated, function (req, res) {
         
         var params = {
             Body: file_content,
-            Bucket: 'fileweb-aws-s3',
+            Bucket: process.env.BUCKET_NAME,
             Key: user_id + "/" + file_name
         };
         s3.putObject(params, function (err, data) {
@@ -243,7 +243,7 @@ app.get('/get_file', checkAuthenticated, function (req, res) {
         }
         if (result.length > 0) {
             var options = {
-                Bucket: 'fileweb-aws-s3',
+                Bucket: process.env.BUCKET_NAME,
                 Key: user_id + "/" + file_key,
             };
             res.attachment(file_key);
@@ -272,7 +272,7 @@ app.post('/del_file', checkAuthenticated, function (req, res) {
             res.send({ 'code': 400, 'message': 'Information error' });
         }
         if (result.length > 0) {
-            var params = { Bucket: 'fileweb-aws-s3', Key: user_id + "/" + file_key };
+            var params = { Bucket: process.env.BUCKET_NAME, Key: user_id + "/" + file_key };
 
             s3.deleteObject(params, function (err, data) {
                 if (err) console.log(err, err.stack);
