@@ -2,6 +2,13 @@ const mysql = require('mysql');
 const path = require('path');
 require('dotenv').config();
 
+console.log({
+    host: process.env.DATABASE_HOST || 'localhost',
+    user: process.env.DATABASE_USER || 'root',
+    password: process.env.DATABASE_PWD || 'root',
+    port: process.env.DATABASE_PORT || 3306,
+    database: process.env.DATABASE_DATABASE || 'file_website',
+});
 var con = mysql.createConnection({
     host: process.env.DATABASE_HOST || 'localhost',
     user: process.env.DATABASE_USER || 'root',
