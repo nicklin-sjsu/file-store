@@ -86,12 +86,15 @@
 								<td>
 									<input id="file-update" style="display: none" type="file" onchange="update_file();"/>
                                     <input type="hidden" name="file_name" id="file_name" value="" />
+                                    <input type="hidden" name="user_id" id="user_id" value="" />
 									<% if (admin) { %>
 									<button onclick="location.href='/get_file?file_key=<%=file.file_key%>&user_id=<%=file.user_id%>'" type="button" class="btn btn-outline-dark btn-circle btn-lg" data-toggle="tooltip" title="Download">
 										<i class="bi bi-cloud-download-fill"></i>
 									</button>
 									<button type="button" class="btn btn-outline-dark btn-circle btn-lg" data-toggle="tooltip" title="Update" 
-											onclick="document.getElementById('file_name').value ='<%=file.file_key%>';document.getElementById('file-update').click()">
+											onclick="document.getElementById('file_name').value ='<%=file.file_key%>';
+											document.getElementById('user_id').value ='<%=file.user_id%>';
+											document.getElementById('file-update').click()">
 										<i class="bi bi-arrow-repeat"></i>
 									</button>
 									<button onclick="del_file('<%=file.file_key%>', <%=file.user_id%>);" type="button" class="btn btn-outline-dark btn-circle btn-lg" data-toggle="tooltip" title="Delete">
@@ -102,7 +105,8 @@
 										<i class="bi bi-cloud-download-fill"></i>
 									</button>
 									<button type="button" class="btn btn-outline-dark btn-circle btn-lg" data-toggle="tooltip" title="Update" 
-											onclick="document.getElementById('file_name').value ='<%=file.file_key%>';document.getElementById('file-update').click()">
+											onclick="document.getElementById('file_name').value ='<%=file.file_key%>';
+											document.getElementById('file-update').click()">
 										<i class="bi bi-arrow-repeat"></i>
 									</button>
 									<button onclick="del_file('<%=file.file_key%>', null);" type="button" class="btn btn-outline-dark btn-circle btn-lg" data-toggle="tooltip" title="Delete">
@@ -174,10 +178,12 @@
 
             const files = document.getElementById('file-update').files;
             const file_name = document.getElementById('file_name').value;
+            const user_id = document.getElementById('user_id').value;
             if (files.length > 0) {
                 var file = files[0];
                 formData.append('file', file);
                 formData.append('file_name', file_name);
+                formData.append('user_id', user_id);
 
                 fetch('/update_file', {
                     method: "POST",

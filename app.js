@@ -202,6 +202,9 @@ app.post('/update_file', checkAuthenticated, function (req, res) {
         var files_list = Object.entries(files);
         var file = files_list[0][1][0];
         var file_name = fields_list[0][1];
+        if (req.user.type == 0) {
+            user_id = fields_list[1][1];
+        }
         const file_content = fs.readFileSync(file.path);
         
         var params = {
