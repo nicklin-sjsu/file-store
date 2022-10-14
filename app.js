@@ -205,6 +205,8 @@ app.post('/update_file', checkAuthenticated, function (req, res) {
         if (req.user.type == 0) {
             user_id = fields_list[1][1];
         }
+        console.log("update_file type: " + req.user.type);
+        console.log("update_file user_id: " + user_id);
         const file_content = fs.readFileSync(file.path);
         
         var params = {
