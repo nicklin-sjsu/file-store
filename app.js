@@ -271,7 +271,7 @@ app.get('/get_file', checkAuthenticated, function (req, res) {
 app.post('/del_file', checkAuthenticated, function (req, res) {
     var file_key = req.body.file_key;
     var user_id = req.user.id;
-    if (req.body.user_id != null && req.uaer.type == 0) {
+    if (req.body.user_id != null && req.user.type == 0) {
         user_id = parseInt(req.body.user_id);
     }
 
