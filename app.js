@@ -217,8 +217,8 @@ app.post('/update_file', checkAuthenticated, function (req, res) {
         s3.putObject(params, function (err, data) {
             if (err) console.log(err, err.stack);
             else {
-                var sql = mysql.format('UPDATE files SET file_key = ? WHERE user_id = ? AND file_key = ?',
-                    [file_name, user_id, file_name]);
+                var sql = mysql.format('UPDATE files SET updatetime = now() WHERE user_id = ? AND file_key = ?',
+                    [user_id, file_name]);
                 con.query(sql, function (err, result) {
                     if (err) {
                         message = "User " + req.user.id + " updated " + file_name + " belonging to user " + user_id + " update sql failed with " + err;
