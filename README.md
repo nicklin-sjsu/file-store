@@ -1,7 +1,9 @@
 Welcome to File Store
 ==================================================
+Website URL: http://awsfilesstore.com/
 
 This website can allow users to upload, retrieve, and manage files in the AWS S3.
+
 
 What's Here
 -----------
@@ -25,6 +27,7 @@ This repository includes:
   CloudFormation to deploy infrastructure
 * template-configuration.json - this file contains the project ARN with placeholders used for tagging resources with the project ID
 
+
 Usage
 ---------------
 
@@ -38,3 +41,34 @@ Usage
 	3. File delete. Find the file you want to delete in the list and click "delete" button to delete the file.
 3. Admin management
 	1. Admin user can view and manage all the files for every user. Select the desired user and follow the steps in "File management".
+
+
+Setup
+---------------
+
+1. Clone this repository
+2. install nodejs, npm, apache2(or other HTTP server)
+3. add parameters to .env file
+4. npm install
+5. npm start
+
+
+environment parameters
+---------------
+
+DATABASE_HOST
+DATABASE_USER
+DATABASE_PWD
+DATABASE_PORT
+DATABASE_DATABASE
+TOPIC_ARN
+AWS_ACCESS_KEY
+AWS_SECRET_KEY
+REGION
+BUCKET_NAME
+
+
+Reference
+---------------
+The background image is taken by Roberto Nickson:
+https://www.pexels.com/photo/brown-mountains-2559941/
